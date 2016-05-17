@@ -72,17 +72,17 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
 
             // Most workspaces will instantiate the Serial Port JSON Server widget
             this.loadSpjsWidget();
-            
+
             // Most workspaces will instantiate the Serial Port Console widget
             this.loadConsoleWidget();
-            
+
             // This is a huge method that was built from the original jsfiddle workspace
             // we should technically put each widget in its own method for loading
             this.loadWidgets();
 
             // Create our workspace upper right corner triangle menu
             this.loadWorkspaceMenu();
-            
+
             // Add our billboard to the menu (has name, url, picture of workspace)
             this.addBillboardToWorkspaceMenu();
 
@@ -91,7 +91,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             // the height of the browser window. You could turn this off and
             // just set widget min-height in CSS instead
             this.setupResize();
-            
+
             setTimeout(function() {
                 $(window).trigger('resize');
             }, 3000);
@@ -222,7 +222,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
 
 
         loadWidgets: function(callback) {
-            
+
             // create a workspace object reference to this so inside the anonymous functions below
             // the workspace can be referred to
             var wsObj = this;
@@ -237,11 +237,11 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     instance: null,
                     init: function() {
                         this.btn.click(this.toggle.bind(this));
-                        
+
                         // do NOT dynamically load this one since it has a pubsub that's key to get called
                         // and in future may register for drag/drop events for .txt files  
                         this.load();
-                        
+
                         // we need to subscribe to the /didDrop signal of this widget so we know to show it
                         //chilipeppr.subscribe("/" + this.id + "/didDrop", this, this.show);
                         console.log("done instantiating " + this.name + " add-on widget");
@@ -249,24 +249,24 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     load: function(callback) {
                         var that = this;
                         chilipeppr.load(
-                          this.div.prop("id"),
-                          this.url,
-                          function() {
-                            // Callback after widget loaded into #myDivWidgetRecvtext
-                            // Now use require.js to get reference to instantiated widget
-                            cprequire(
-                              ["inline:" + that.id], // the id you gave your widget
-                              function(myObjWidget) {
-                                // Callback that is passed reference to the newly loaded widget
-                                console.log(that.name + " just got loaded.", myObjWidget);
-                                //myObjWidget.init(myObjWidget.activate.bind(myObjWidget));
-                                myObjWidget.init();
-                                //myObjWidget.activate();
-                                that.instance = myObjWidget;
-                                if (callback) callback(that.instance);
-                              }
-                            );
-                          }
+                            this.div.prop("id"),
+                            this.url,
+                            function() {
+                                // Callback after widget loaded into #myDivWidgetRecvtext
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:" + that.id], // the id you gave your widget
+                                    function(myObjWidget) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log(that.name + " just got loaded.", myObjWidget);
+                                        //myObjWidget.init(myObjWidget.activate.bind(myObjWidget));
+                                        myObjWidget.init();
+                                        //myObjWidget.activate();
+                                        that.instance = myObjWidget;
+                                        if (callback) callback(that.instance);
+                                    }
+                                );
+                            }
                         );
                     },
                     toggle: function() {
@@ -281,9 +281,9 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     show: function() {
                         this.div.removeClass("hidden");
                         this.btn.addClass("active");
-    
+
                         console.log("got show for " + this.name + ", this:", this, "wsObj:", wsObj);
-                        
+
                         // see if instantiated already
                         // if so, just activate
                         if (this.instance != null) {
@@ -294,16 +294,16 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         else {
                             // otherwise, dynamic load
                             console.log(this.name + " appears to not be instantiated, let us load it from scratch")
-                            
+
                         }
                         $(window).trigger('resize');
                     },
                     hide: function() {
                         this.div.addClass("hidden");
                         this.btn.removeClass("active");
-                        
+
                         console.log("got hide for " + this.name + ". this:", this, "wsObj:", wsObj);
-                        
+
                         if (this.instance != null) {
                             this.instance.unactivate();
                         }
@@ -324,10 +324,10 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     instance: null,
                     init: function() {
                         this.btn.click(this.toggle.bind(this));
-                        
+
                         // do NOT dynamically load this one since it registers for drag/drop events for .svg files  
                         this.load();
-                        
+
                         // we need to subscribe to the /didDrop signal of this widget so we know to show it
                         chilipeppr.subscribe("/" + this.id + "/didDrop", this, this.show);
                         console.log("done instantiating " + this.name + " add-on widget");
@@ -335,24 +335,24 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     load: function(callback) {
                         var that = this;
                         chilipeppr.load(
-                          this.div.prop("id"),
-                          this.url,
-                          function() {
-                            // Callback after widget loaded into #myDivWidgetRecvtext
-                            // Now use require.js to get reference to instantiated widget
-                            cprequire(
-                              ["inline:" + that.id], // the id you gave your widget
-                              function(myObjWidget) {
-                                // Callback that is passed reference to the newly loaded widget
-                                console.log(that.name + " just got loaded.", myObjWidget);
-                                //myObjWidget.init(myObjWidget.activate.bind(myObjWidget));
-                                myObjWidget.init();
-                                //myObjWidget.activate();
-                                that.instance = myObjWidget;
-                                if (callback) callback(that.instance);
-                              }
-                            );
-                          }
+                            this.div.prop("id"),
+                            this.url,
+                            function() {
+                                // Callback after widget loaded into #myDivWidgetRecvtext
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:" + that.id], // the id you gave your widget
+                                    function(myObjWidget) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log(that.name + " just got loaded.", myObjWidget);
+                                        //myObjWidget.init(myObjWidget.activate.bind(myObjWidget));
+                                        myObjWidget.init();
+                                        //myObjWidget.activate();
+                                        that.instance = myObjWidget;
+                                        if (callback) callback(that.instance);
+                                    }
+                                );
+                            }
                         );
                     },
                     toggle: function() {
@@ -367,9 +367,9 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     show: function() {
                         this.div.removeClass("hidden");
                         this.btn.addClass("active");
-    
+
                         console.log("got show for " + this.name + ", this:", this, "wsObj:", wsObj);
-                        
+
                         // see if instantiated already
                         // if so, just activate
                         if (this.instance != null) {
@@ -380,16 +380,16 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         else {
                             // otherwise, dynamic load
                             console.log(this.name + " appears to not be instantiated, let us load it from scratch")
-                            
+
                         }
                         $(window).trigger('resize');
                     },
                     hide: function() {
                         this.div.addClass("hidden");
                         this.btn.removeClass("active");
-                        
+
                         console.log("got hide for " + this.name + ". this:", this, "wsObj:", wsObj);
-                        
+
                         if (this.instance != null) {
                             this.instance.unactivate();
                         }
@@ -399,7 +399,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             }();
             this.svg2gcodeObj.init();
             //End SVG2Gcode
-            
+
             // Inject the Font2Gcode widget
             /*
             $('<div class="zhigh" id="com-chilipeppr-ws-font2gcode"></div>')
@@ -480,7 +480,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     this.zipwhipRecvTextBtn.addClass("active");
 
                     console.log("got showzipwhipRecvText. this:", this, "wsObj:", wsObj);
-                    
+
                     // see if instantiated already
                     // if so, just activate
                     if (this.zipwhipRecvTextInstance != null) {
@@ -493,22 +493,22 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         console.log("zipwhip recv text appears to not be instantiated, let us load it from scratch")
                         var that = this;
                         chilipeppr.load(
-                          this.zipwhipRecvTextDiv.prop("id"),
-                          "http://raw.githubusercontent.com/chilipeppr/widget-recvtext/master/auto-generated-widget.html",
-                          function() {
-                            // Callback after widget loaded into #myDivWidgetRecvtext
-                            // Now use require.js to get reference to instantiated widget
-                            cprequire(
-                              ["inline:com-chilipeppr-widget-recvtext"], // the id you gave your widget
-                              function(myObjWidgetRecvtext) {
-                                // Callback that is passed reference to the newly loaded widget
-                                console.log("Widget / Zipwhip Receive Text just got loaded.", myObjWidgetRecvtext);
-                                myObjWidgetRecvtext.init();
-                                that.zipwhipRecvTextInstance = myObjWidgetRecvtext;
-                                if (callback) callback(that.zipwhipRecvTextInstance);
-                              }
-                            );
-                          }
+                            this.zipwhipRecvTextDiv.prop("id"),
+                            "http://raw.githubusercontent.com/chilipeppr/widget-recvtext/master/auto-generated-widget.html",
+                            function() {
+                                // Callback after widget loaded into #myDivWidgetRecvtext
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:com-chilipeppr-widget-recvtext"], // the id you gave your widget
+                                    function(myObjWidgetRecvtext) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log("Widget / Zipwhip Receive Text just got loaded.", myObjWidgetRecvtext);
+                                        myObjWidgetRecvtext.init();
+                                        that.zipwhipRecvTextInstance = myObjWidgetRecvtext;
+                                        if (callback) callback(that.zipwhipRecvTextInstance);
+                                    }
+                                );
+                            }
                         );
                     }
                     $(window).trigger('resize');
@@ -516,9 +516,9 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                 hidezipwhipRecvText: function() {
                     this.zipwhipRecvTextDiv.addClass("hidden");
                     this.zipwhipRecvTextBtn.removeClass("active");
-                    
+
                     console.log("got hidezipwhipRecvText. this:", this, "wsObj:", wsObj);
-                    
+
                     if (this.zipwhipRecvTextInstance != null) {
                         this.zipwhipRecvTextInstance.unactivateWidget();
                     }
@@ -527,7 +527,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             };
             wsObj.zipwhipRecvTextObj.init();
             //End Zipwhip Receive Text
-            
+
             // Auto-Leveller
             // com-chilipeppr-ws-autolevel
             chilipeppr.load(
@@ -614,8 +614,8 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         });
                     });
                 }); //End JSCut
-                
-            
+
+
             // Laser Solder
             // com-chilipeppr-ws-jscut
             chilipeppr.load(
@@ -645,7 +645,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         });
                     });
                 }); //End Laser Solder
-                
+
 
             // Eagle BRD Import
             // com-chilipeppr-widget-eagle
@@ -653,7 +653,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             // Setup drag/drop for BRD files on our own because we don't
             // want to instantiate the Eagle BRD codebase (i.e. load its massive
             // javascript files) until the user try requests that we do
-            this.eagleObj = function() { 
+            this.eagleObj = function() {
                 return {
                     eagleBtn: null,
                     eagleDiv: null,
@@ -680,7 +680,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     showEagle: function(callback) {
                         this.eagleDiv.removeClass("hidden");
                         this.eagleBtn.addClass("active");
-    
+
                         // see if instantiated already
                         // if so, just activate
                         if (this.eagleInstance != null) {
@@ -727,7 +727,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         // we have the data
                         // double check it's a board file, cuz it could be gcode
                         if (data.match(/<!DOCTYPE eagle SYSTEM "eagle.dtd">/i)) {
-    
+
                             // check that there's a board tag
                             if (data.match(/<board>/i)) {
                                 console.log("we have an eagle board file!");
@@ -738,7 +738,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                                     that.eagleInstance.open(data, info);
                                 });
                                 console.log("opened brd file");
-    
+
                                 // do NOT store a lastDropped, rather we should
                                 // get told from the workspace what the last file
                                 // was and if it was a BRD file we should auto-open
@@ -752,7 +752,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                                 console.log("looks like it is an eagle generated file, but not a board file. sad.");
                                 chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Looks like you dragged in an Eagle CAD file, but it contains no board tag. You may have dragged in a schematic instead. Please retry with a valid board file.");
                             }
-    
+
                             // now, we need to return false so no other widgets see this
                             // drag/drop event because they won't know how to handle
                             // an Eagle Brd file
@@ -779,8 +779,8 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         $('#com-chilipeppr-widget-eagle').removeClass("panel-primary");
                         $('#com-chilipeppr-ws-menu .eagle-button').removeClass("btn-primary");
                     },
-                }; 
-                
+                };
+
             }();
             console.log("eagleObj:", this.eagleObj);
             this.eagleObj.init();
@@ -861,67 +861,67 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             // lordmundi/btyfqk7w
             this.shuttlexpressObj = function() {
                 return {
-                id: "shuttlexpress",
-                //url: "http://fiddle.jshell.net/chilipeppr/27v59xLg/show/light/",
-                url: "http://raw.githubusercontent.com/chilipeppr/widget-shuttlexpress/master/auto-generated-widget.html",
-                requireName: "inline:com-chilipeppr-widget-shuttlexpress",
-                btn: null,
-                div: null,
-                instance: null,
-                init: function() {
-                    this.btn = $('#com-chilipeppr-ws-menu .' + this.id + '-button');
-                    this.div = $('#com-chilipeppr-ws-' + this.id + '');
-                    this.setupBtn();
-                    console.log('done instantiating ' + this.id + ' add-on widget');
-                },
-                setupBtn: function() {
-                    this.btn.click(this.toggle.bind(this));
-                },
-                toggle: function() {
-                    if (this.div.hasClass("hidden")) {
-                        // unhide
-                        this.show();
-                    }
-                    else {
-                        this.hide();
-                    }
-                },
-                show: function(callback) {
-                    this.div.removeClass("hidden");
-                    this.btn.addClass("active");
+                    id: "shuttlexpress",
+                    //url: "http://fiddle.jshell.net/chilipeppr/27v59xLg/show/light/",
+                    url: "http://raw.githubusercontent.com/chilipeppr/widget-shuttlexpress/master/auto-generated-widget.html",
+                    requireName: "inline:com-chilipeppr-widget-shuttlexpress",
+                    btn: null,
+                    div: null,
+                    instance: null,
+                    init: function() {
+                        this.btn = $('#com-chilipeppr-ws-menu .' + this.id + '-button');
+                        this.div = $('#com-chilipeppr-ws-' + this.id + '');
+                        this.setupBtn();
+                        console.log('done instantiating ' + this.id + ' add-on widget');
+                    },
+                    setupBtn: function() {
+                        this.btn.click(this.toggle.bind(this));
+                    },
+                    toggle: function() {
+                        if (this.div.hasClass("hidden")) {
+                            // unhide
+                            this.show();
+                        }
+                        else {
+                            this.hide();
+                        }
+                    },
+                    show: function(callback) {
+                        this.div.removeClass("hidden");
+                        this.btn.addClass("active");
 
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.instance != null) {
-                        this.instance.activateWidget();
-                        if (callback) callback();
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        var that = this;
-                        chilipeppr.load(
-                            '#com-chilipeppr-ws-' + this.id + '',
-                            this.url,
-                            function() {
-                                require([that.requireName], function(myinstance) {
-                                    that.instance = myinstance;
-                                    console.log(that.id + " instantiated. instance:", that.instance);
-                                    that.instance.init();
-                                    if (callback) callback();
-                                });
-                            }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hide: function() {
-                    this.div.addClass("hidden");
-                    this.btn.removeClass("active");
-                    if (this.instance != null) {
-                        this.instance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
+                        // see if instantiated already
+                        // if so, just activate
+                        if (this.instance != null) {
+                            this.instance.activateWidget();
+                            if (callback) callback();
+                        }
+                        else {
+                            // otherwise, dynamic load
+                            var that = this;
+                            chilipeppr.load(
+                                '#com-chilipeppr-ws-' + this.id + '',
+                                this.url,
+                                function() {
+                                    require([that.requireName], function(myinstance) {
+                                        that.instance = myinstance;
+                                        console.log(that.id + " instantiated. instance:", that.instance);
+                                        that.instance.init();
+                                        if (callback) callback();
+                                    });
+                                }
+                            );
+                        }
+                        $(window).trigger('resize');
+                    },
+                    hide: function() {
+                        this.div.addClass("hidden");
+                        this.btn.removeClass("active");
+                        if (this.instance != null) {
+                            this.instance.unactivateWidget();
+                        }
+                        $(window).trigger('resize');
+                    },
                 }
             }();
             this.shuttlexpressObj.init();
@@ -932,64 +932,64 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             // the button first time.
             this.touchPlateObj = function() {
                 return {
-                touchPlateBtn: null,
-                touchPlateDiv: null,
-                touchPlateInstance: null,
-                init: function() {
-                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
-                    this.setupBtn();
-                    console.log("done instantiating touchPlate add-on widget");
-                },
-                setupBtn: function() {
-                    this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
-                },
-                toggletouchPlate: function() {
-                    if (this.touchPlateDiv.hasClass("hidden")) {
-                        // unhide
-                        this.showtouchPlate();
-                    }
-                    else {
-                        this.hidetouchPlate();
-                    }
-                },
-                showtouchPlate: function(callback) {
-                    this.touchPlateDiv.removeClass("hidden");
-                    this.touchPlateBtn.addClass("active");
+                    touchPlateBtn: null,
+                    touchPlateDiv: null,
+                    touchPlateInstance: null,
+                    init: function() {
+                        this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
+                        this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
+                        this.setupBtn();
+                        console.log("done instantiating touchPlate add-on widget");
+                    },
+                    setupBtn: function() {
+                        this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
+                    },
+                    toggletouchPlate: function() {
+                        if (this.touchPlateDiv.hasClass("hidden")) {
+                            // unhide
+                            this.showtouchPlate();
+                        }
+                        else {
+                            this.hidetouchPlate();
+                        }
+                    },
+                    showtouchPlate: function(callback) {
+                        this.touchPlateDiv.removeClass("hidden");
+                        this.touchPlateBtn.addClass("active");
 
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.activateWidget();
-                        if (callback) callback();
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        var that = this;
-                        chilipeppr.load(
-                            "#com-chilipeppr-ws-touchplate",
-                            "http://raw.githubusercontent.com/chilipeppr/widget-touchplate/master/auto-generated-widget.html",
-                            function() {
-                                require(["inline:com-chilipeppr-widget-touchplate"], function(touchPlate) {
-                                    that.touchPlateInstance = touchPlate;
-                                    console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
-                                    that.touchPlateInstance.init();
-                                    //eagleInstance.activateWidget();
-                                    if (callback) callback();
-                                });
-                            }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hidetouchPlate: function() {
-                    this.touchPlateDiv.addClass("hidden");
-                    this.touchPlateBtn.removeClass("active");
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
+                        // see if instantiated already
+                        // if so, just activate
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.activateWidget();
+                            if (callback) callback();
+                        }
+                        else {
+                            // otherwise, dynamic load
+                            var that = this;
+                            chilipeppr.load(
+                                "#com-chilipeppr-ws-touchplate",
+                                "http://raw.githubusercontent.com/chilipeppr/widget-touchplate/master/auto-generated-widget.html",
+                                function() {
+                                    require(["inline:com-chilipeppr-widget-touchplate"], function(touchPlate) {
+                                        that.touchPlateInstance = touchPlate;
+                                        console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
+                                        that.touchPlateInstance.init();
+                                        //eagleInstance.activateWidget();
+                                        if (callback) callback();
+                                    });
+                                }
+                            );
+                        }
+                        $(window).trigger('resize');
+                    },
+                    hidetouchPlate: function() {
+                        this.touchPlateDiv.addClass("hidden");
+                        this.touchPlateBtn.removeClass("active");
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.unactivateWidget();
+                        }
+                        $(window).trigger('resize');
+                    },
                 }
             }();
             this.touchPlateObj.init();
@@ -1000,15 +1000,15 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             chilipeppr.load(
                 "com-chilipeppr-ws-programmer",
                 "http://raw.githubusercontent.com/chilipeppr/widget-programmer/master/auto-generated-widget.html",
-                require(["inline:com-chilipeppr-widget-programmer"], function (programmer) {
+                require(["inline:com-chilipeppr-widget-programmer"], function(programmer) {
                     programmer.init();
                     // setup toggle button
                     var btn = $('#com-chilipeppr-ws-menu .programmer-button');
                     var div = $('#com-chilipeppr-ws-programmer');
                     btn.click(programmer.show.bind(programmer));
-                })  
-            );  //End Arduino / Atmel Firmware Programmer
-    
+                })
+            ); //End Arduino / Atmel Firmware Programmer
+
             // Element / Drag Drop
             // Load the dragdrop element into workspace toolbar
             // http://jsfiddle.net/chilipeppr/Z9F6G/
@@ -1040,25 +1040,25 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                     });
                 }
             ); //End Element / Drag Drop
-            
+
             // 3D Viewer
             // http://jsfiddle.net/chilipeppr/y3HRF
             chilipeppr.load(
                 "#com-chilipeppr-3dviewer",
                 //"http://fiddle.jshell.net/chilipeppr/y3HRF/show/light/",
                 "http://raw.githubusercontent.com/chilipeppr/widget-3dviewer/master/auto-generated-widget.html",
-    
+
                 function() {
                     console.log("got callback done loading 3d");
-    
+
                     cprequire(
                         ['inline:com-chilipeppr-widget-3dviewer'],
-    
+
                         function(threed) {
                             console.log("Running 3dviewer");
                             threed.init();
                             console.log("3d viewer initted");
-    
+
                             // Ok, do someting whacky. Try to move the 3D Viewer 
                             // Control Panel to the center column
                             setTimeout(function() {
@@ -1067,7 +1067,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                                 $('#com-chilipeppr-widget-3dviewer').addClass("nomargin");
                                 $('#com-chilipeppr-3dviewer-controlpanel').append(element);
                             }, 10);
-    
+
                             // listen to resize events so we can resize our 3d viewer
                             // this was done to solve the scrollbar residue we were seeing
                             // resize this console on a browser resize
@@ -1082,7 +1082,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                                     console.log("3d view force resize. 1 sec later");
                                     threed.resize();
                                 }, 1000);
-    
+
                             });
                         }
                     );
@@ -1151,22 +1151,22 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             chilipeppr.load(
                 "com-chilipeppr-xyz",
                 // Lauer's new widget 8/16/15
-                "http://raw.githubusercontent.com/chilipeppr/widget-axes/master/auto-generated-widget.html", 
+                "http://raw.githubusercontent.com/chilipeppr/widget-axes/master/auto-generated-widget.html",
                 // Temporary widget from Danal
                 //"http://fiddle.jshell.net/Danal/vktco1y6/show/light/", 
                 // Lauer's original core widget
                 //"http://fiddle.jshell.net/chilipeppr/gh45j/show/light/",
-        
-                function () {
+
+                function() {
                     cprequire(
-                    ["inline:com-chilipeppr-widget-xyz"],
-            
-                    function (xyz) {
-                        xyz.init();
-                    });
+                        ["inline:com-chilipeppr-widget-xyz"],
+
+                        function(xyz) {
+                            xyz.init();
+                        });
                 }
             ); //End XYZ
-            
+
             // TinyG
             // http://jsfiddle.net/chilipeppr/XxEBZ/
             // com-chilipeppr-tinyg
@@ -1178,36 +1178,34 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                 //"http://fiddle.jshell.net/Danal/6rq2wx3o/show/light/",
                 // Lauer's version
                 //"http://fiddle.jshell.net/chilipeppr/XxEBZ/show/light/",
-        
-                function () {
+
+                function() {
                     cprequire(
-                    ["inline:com-chilipeppr-widget-tinyg"],
-            
-                    function (tinyg) {
-                        tinyg.init();
-                    });
+                        ["inline:com-chilipeppr-widget-tinyg"],
+
+                        function(tinyg) {
+                            tinyg.init();
+                        });
                 }
             ); //End TinyG
-            
-            
-chilipeppr.load(
-  "com-chilipeppr-webrtcclient",
-  "http://raw.githubusercontent.com/Tegeon/widget-cam/master/auto-generated-widget.html",
-  function() {
-    // Callback after widget loaded into #myDivWidgetCam
-    // Now use require.js to get reference to instantiated widget
-    cprequire(
-      ["inline:com-chilipeppr-widget-cam"], // the id you gave your widget
-      function(myObjWidgetCam) {
-        // Callback that is passed reference to the newly loaded widget
-        console.log("Widget / Cam just got loaded.", myObjWidgetCam);
-        myObjWidgetCam.init();
-      }
-    );
-  }
-);
-            
-            
+
+
+            chilipeppr.load(
+                "com-chilipeppr-webrtcclient",
+                "http://raw.githubusercontent.com/Tegeon/widget-cam/master/auto-generated-widget.html",
+                function() {
+                    // Callback after widget loaded into #myDivWidgetCam
+                    // Now use require.js to get reference to instantiated widget
+                    cprequire(
+                        ["inline:com-chilipeppr-widget-cam"], // the id you gave your widget
+                        function(myObjWidgetCam) {
+                            // Callback that is passed reference to the newly loaded widget
+                            console.log("Widget / Cam just got loaded.", myObjWidgetCam);
+                            myObjWidgetCam.init();
+                        }
+                    );
+                }
+            );
 
             // WebRTC Client com-chilipeppr-webrtcclient
             /*
