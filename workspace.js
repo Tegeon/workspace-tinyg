@@ -1191,7 +1191,7 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             
             
 chilipeppr.load(
-  "#myDivWidgetCam",
+  "com-chilipeppr-webrtcclient",
   "http://raw.githubusercontent.com/Tegeon/widget-cam/master/auto-generated-widget.html",
   function() {
     // Callback after widget loaded into #myDivWidgetCam
