@@ -692,8 +692,6 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                             var that = this;
                             chilipeppr.load(
                                 "#com-chilipeppr-ws-eagle",
-                                //"http://fiddle.jshell.net/chilipeppr/3fe23xsr/show/light/", 
-                                //"http://raw.githubusercontent.com/Tegeon/widget-eagle/master/auto-generated-widget.html",
                                 "http://raw.githubusercontent.com/Tegeon/eagle-brd-import/master/auto-generated-widget.html",
                                 function() {
                                     require(["inline:com-chilipeppr-widget-eagle"], function(eagle) {
